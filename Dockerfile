@@ -37,8 +37,8 @@ RUN mkdir           /etc/service/phpfpm
 ADD build/phpfpm.sh /etc/service/phpfpm/run
 RUN chmod +x        /etc/service/phpfpm/run
 
-WORKDIR /var/www
-RUN git clone https://github.com/enma72056/hello.git .
+WORKDIR /var
+RUN git clone https://github.com/enma72056/hello.git www
 
 EXPOSE 80
 # End Nginx-PHP
