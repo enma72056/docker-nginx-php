@@ -38,6 +38,7 @@ ADD build/phpfpm.sh /etc/service/phpfpm/run
 RUN chmod +x        /etc/service/phpfpm/run
 
 WORKDIR /var
+RUN rm -rf www
 RUN git clone https://github.com/enma72056/hello.git www
 
 EXPOSE 80
