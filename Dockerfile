@@ -13,7 +13,7 @@ CMD ["/sbin/my_init"]
 
 # Nginx-PHP Installation
 RUN apt-get update
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim curl wget build-essential python-software-properties
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim curl git wget build-essential python-software-properties
 RUN add-apt-repository -y ppa:ondrej/php5
 RUN add-apt-repository -y ppa:nginx/stable
 RUN apt-get update
@@ -29,7 +29,6 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php5/fpm/php-fpm.conf
 RUN sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini
  
-RUN mkdir -p        /var/www
 ADD build/default   /etc/nginx/sites-available/default
 RUN mkdir           /etc/service/nginx
 ADD build/nginx.sh  /etc/service/nginx/run
@@ -37,6 +36,9 @@ RUN chmod +x        /etc/service/nginx/run
 RUN mkdir           /etc/service/phpfpm
 ADD build/phpfpm.sh /etc/service/phpfpm/run
 RUN chmod +x        /etc/service/phpfpm/run
+
+WORKDIR /var/www
+git clone https://github.com/enma72056/hello.git .
 
 EXPOSE 80
 # End Nginx-PHP
